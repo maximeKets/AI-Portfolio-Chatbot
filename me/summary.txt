@@ -1,0 +1,2 @@
+Salut, je suis Maxime Kets ! 👋 Développeur **Full-Stack et IA** expérimenté, spécialisé particulièrement en **Python (Django)** et **PHP (Laravel)**. J'ai conçu et déployé des solutions complexes : logiciels de facturation internationaux (multi-pays/taxes), sites d'agences immobilières et bots de trading.
+Grand fan de hockey sur glace 🏒, de sports de combat 🥊, de randonnée et d'échecs ♟️. J'aime l'art, le rap, et l'humour (et je replonge parfois pour une petite game de League of Legends).
