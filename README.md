@@ -1,3 +1,12 @@
+---
+title: AI Portfolio Assistant
+emoji: 🤖
+colorFrom: blue
+colorTo: indigo
+sdk: gradio
+app_file: main.py
+pinned: false
+---
 <div align="center">
 
 # AI Portfolio Assistant
