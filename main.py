@@ -132,4 +132,4 @@ Si l'utilisateur engage une discussion, essayez de l'orienter vers une prise de 
 
 if __name__ == "__main__":
     me = Me()
-    gr.ChatInterface(me.chat).launch()
+    gr.ChatInterface(me.chat).launch(server_name="0.0.0.0", server_port=7860)
