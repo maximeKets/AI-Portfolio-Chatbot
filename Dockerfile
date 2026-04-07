@@ -16,9 +16,12 @@ RUN uv pip install --system -r pyproject.toml
 # Copy the rest of the application code
 COPY . .
 
+# Unbuffer Python output for real-time logs
+ENV PYTHONUNBUFFERED=1
+
 # Expose Gradio's default port
 EXPOSE 7860
 
 # Specify how to run the application
-# We use uv run directly as specified in the README
-CMD ["uv", "run", "python", "main.py"]
+# Dependencies are installed system-wide, so direct python execution is correct
+CMD ["python", "main.py"]
