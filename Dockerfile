@@ -1,27 +1,49 @@
 # syntax=docker/dockerfile:1
-FROM python:3.12-slim
+ARG PYTHON_VERSION=3.12
+FROM python:${PYTHON_VERSION}-slim AS base
 
-# Install uv for fast dependency management
-RUN pip install uv
-
-# Set the working directory
-WORKDIR /app
-
-# Copy dependency files first to leverage Docker cache
-COPY pyproject.toml requirements.txt* ./
-
-# Install dependencies using uv
-RUN uv pip install --system -r pyproject.toml
-
-# Copy the rest of the application code
-COPY . .
-
-# Unbuffer Python output for real-time logs
+ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Expose Gradio's default port
-EXPOSE 7860
+# Récupérer l'exécutable uv depuis l'image officielle
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# Specify how to run the application
-# Dependencies are installed system-wide, so direct python execution is correct
+# Configuration de uv
+ENV UV_COMPILE_BYTECODE=1
+ENV UV_LINK_MODE=copy
+
+WORKDIR /app
+
+# Création du user sécurisé
+ARG UID=10001
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "/nonexistent" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "${UID}" \
+    appuser
+
+# Optimisation du cache : copie stricte des fichiers de dépendances
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --frozen --no-install-project --no-dev
+
+# Copie du code source
+COPY . /app
+
+# Installation du projet local
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-dev
+
+# Ajout de l'environnement virtuel au PATH
+ENV PATH="/app/.venv/bin:$PATH"
+
+USER appuser
+
+EXPOSE 8000
+
+# Lancement de l'application
 CMD ["python", "main.py"]

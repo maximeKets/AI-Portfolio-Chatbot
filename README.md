@@ -11,6 +11,9 @@ pinned: false
 
 # AI Portfolio Assistant
 
+[![GHCR](https://img.shields.io/badge/GHCR-Ready-2ea44f?logo=github)](https://github.com/maximeKets/AI-Portfolio-Chatbot/packages)
+[![DockerHub](https://img.shields.io/badge/DockerHub-Ready-2496ed?logo=docker)](https://hub.docker.com/r/maximeks/ai-portfolio-chatbot)
+
 ![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
 ![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o--mini-green.svg)
 ![Gradio](https://img.shields.io/badge/UI-Gradio-orange.svg)
@@ -77,4 +80,14 @@ Nous utilisons `uv` pour configurer l'environnement Python de manière rapide et
    ```
    Un lien local (ex: `http://127.0.0.1:7860`) s'affichera pour accéder à l'interface de chat.
 
+## 🐳 Déploiement via Docker
 
+Ce projet est distribué sous forme d'image Docker multi-architecture (AMD64 / ARM64).
+
+```bash
+# 1. Récupérer la dernière image depuis GitHub Container Registry
+docker pull ghcr.io/maximeKets/AI-Portfolio-Chatbot:latest
+
+# 2. Lancer le conteneur (ajuste le port si nécessaire)
+docker run -p 8000:8000 ghcr.io/maximeKets/AI-Portfolio-Chatbot:latest
+```
